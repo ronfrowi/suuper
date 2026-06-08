@@ -1,4 +1,4 @@
-import { createClient } from '@/lib/supabase/server'
+import { createClient, createServiceClient } from '@/lib/supabase/server'
 import { redirect } from 'next/navigation'
 
 export default async function AdminLayout({ children }: { children: React.ReactNode }) {
@@ -7,7 +7,9 @@ export default async function AdminLayout({ children }: { children: React.ReactN
 
   if (!user) redirect('/login')
 
-  const { data: profile } = await supabase
+  // Use service client to bypass RLS when reading the user role
+  const serviceClient = await createServiceClient()
+  const { data: profile } = await serviceClient
     .from('users')
     .select('role')
     .eq('id', user.id)
