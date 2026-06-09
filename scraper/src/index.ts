@@ -1,5 +1,6 @@
 import express, { type Request, type Response, type NextFunction } from 'express'
 import { createClient } from '@supabase/supabase-js'
+import ws from 'ws'
 import { runScrapeJob, startScheduler } from './scheduler'
 
 const app = express()
@@ -7,7 +8,8 @@ app.use(express.json())
 
 const supabase = createClient(
   process.env.SUPABASE_URL!,
-  process.env.SUPABASE_SERVICE_ROLE_KEY!
+  process.env.SUPABASE_SERVICE_ROLE_KEY!,
+  { realtime: { transport: ws as any } }
 )
 
 // ── Auth middleware ────────────────────────────────────────────────────────────

@@ -1,5 +1,6 @@
 import cron from 'node-cron'
 import { createClient } from '@supabase/supabase-js'
+import ws from 'ws'
 import { normalizeMany } from './pipeline/normalize'
 import { upsertMany } from './pipeline/upsert'
 import { matchMany } from './pipeline/match'
@@ -18,7 +19,8 @@ const SCRAPERS: Record<string, () => Promise<typeof import('./scrapers/pali')>> 
 
 const supabase = createClient(
   process.env.SUPABASE_URL!,
-  process.env.SUPABASE_SERVICE_ROLE_KEY!
+  process.env.SUPABASE_SERVICE_ROLE_KEY!,
+  { realtime: { transport: ws as any } }
 )
 
 /** Run the full scrape → normalize → upsert → match pipeline for one supermarket. */
