@@ -1,6 +1,6 @@
 [build]
 builder = "nixpacks"
-buildCommand = "npm install && npm run build && npx playwright install --with-deps chromium"
+buildCommand = "npm install --include=dev && npm run build && npx playwright install --with-deps chromium"
 
 [deploy]
 startCommand = "npm start"
