@@ -1,9 +1,11 @@
 import express, { type Request, type Response, type NextFunction } from 'express'
+import cors from 'cors'
 import { createClient } from '@supabase/supabase-js'
 import ws from 'ws'
 import { runScrapeJob, startScheduler } from './scheduler'
 
 const app = express()
+app.use(cors({ origin: process.env.ALLOWED_ORIGIN ?? '*' }))
 app.use(express.json())
 
 const supabase = createClient(
