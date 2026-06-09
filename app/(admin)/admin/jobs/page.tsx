@@ -1,8 +1,8 @@
-import { createClient } from '@/lib/supabase/server'
+import { createServiceClient } from '@/lib/supabase/server'
 import JobsPanel from './JobsPanel'
 
 export default async function AdminJobsPage() {
-  const supabase = await createClient()
+  const supabase = await createServiceClient()
 
   const [{ data: supermarkets }, { data: recentJobs }] = await Promise.all([
     supabase.from('supermarkets').select('id, slug, name, active').order('name'),
