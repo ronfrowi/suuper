@@ -2,9 +2,6 @@
 builder = "nixpacks"
 buildCommand = "npm install && npm run build && npx playwright install --with-deps chromium"
 
-[build.nixpacks]
-NODE_VERSION = "20"
-
 [deploy]
 startCommand = "npm start"
 healthcheckPath = "/health"
